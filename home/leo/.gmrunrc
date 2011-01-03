@@ -1,0 +1,23 @@
+Terminal = eval urxvt
+TermExec = ${Terminal} -e
+AlwaysInTerm = mutt ssh telnet ftp links lynx mc vi vim pine centerim ncmpcpp alsamixer man
+
+Width = 800
+Top = 0
+Left = 530
+
+History = 256
+
+ShowLast = 0
+
+ShowDotFiles = 0
+
+TabTimeout = 0
+
+URL_http = firefox %u
+URL_mailto = mutt %s
+
+EXT:cc,cpp,h = ${TermExec} 'vim %s'
+EXT:doc,rtf = soffice %s
+EXT:pdf = evince %s
+
