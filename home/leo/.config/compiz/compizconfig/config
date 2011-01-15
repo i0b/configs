@@ -1,0 +1,9 @@
+[gnome_session]
+profile = 
+backend = ini
+integration = false
+
+[general]
+profile = 
+integration = true
+
