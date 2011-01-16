@@ -1,74 +1,138 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => General
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Sets how many lines of history VIM has to remember
+set history=700
+
+" Enable filetype plugin
+"filetype on
+filetype plugin on
+filetype indent on
+autocmd FileType makefile :set noexpandtab
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = ","
+let g:mapleader = ","
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VIM user interface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Set 7 lines to the curors - when moving vertical..
+set so=7
+
+set wildmenu "Turn on WiLd menu
+
+set ruler "Always show current position
+
+set cmdheight=2 "The commandbar height
+
+set hid "Change buffer - without saving
+
+" Set backspace config
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+set ignorecase "Ignore case when searching
+set smartcase
+
+set hlsearch "Highlight search things
+
+set incsearch "Make search act like search in modern browsers
+set nolazyredraw "Don't redraw while executing macros 
+
+set magic "Set magic on, for regular expressions
+
+set showmatch "Show matching bracets when text indicator is over them
+set mat=2 "How many tenths of a second to blink
+
+" No sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern
+" and sets the colorscheme.
+if &t_Co > 2 || has("gui_running")
+  syntax enable "Enable syntax hl
+  set hlsearch
+"  colorscheme peachpuff
+endif
+
+" Set font according to system
+set gfn=Monospace\ 10
+set shell=/bin/zsh
+
+if has("gui_running")
+  set guioptions-=T
+  set t_Co=256
+  set background=dark
+"  colorscheme peaksea
+  set nonu
+else
+"  colorscheme zellner
+"  set background=dark
+  set nonu
+endif
+
+set encoding=utf8
+try
+    lang de_DE
+catch
+endtry
+
+set ffs=unix,dos,mac "Default file types
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Files, backups and undo
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Turn backup off, since most stuff is in SVN, git anyway...
+set nobackup
+set nowb
+set noswapfile
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Text, tab and indent related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set expandtab           " use spaces except for tabs
+set tabstop=2                " set tabstop to N spaces
+set shiftwidth=2        " set how many tabs should be done by one keypress
+set smarttab
+
+set lbr
+set tw=500
+
+set ai "Auto indent
+set si "Smart indet
+set wrap "Wrap lines
+
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file
-endif
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
-fixdel " hopefully fixes the backspace problem
-
-set wildmenu "turn on wildmenu..
-
-filetype on
-autocmd FileType makefile :set noexpandtab
-set expandtab           " use spaces except for tabs
-set ts=2                " set tabstop to N spaces
-set shiftwidth=2        " set how many tabs should be done by one keypress
-
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
-
-" Don't use Ex mode, use Q for formatting
-map Q gq
-
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
   set mouse=a
 endif
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern
-" and sets the colorscheme.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-  colorscheme peachpuff
-endif
-
-" Spellcheck highlight, config, enable, language
-"let loaded_vimspell = 1 
-highlight SpellErrors ctermfg=Red guifg=Red
-  \ cterm=underline gui=underline term=reverse
-let spell_executable = "aspell"
-let spell_language_list = "de,en"
-let spell_update_time = 2000
-let spell_guess_language_ft = "tex,mail,text,html"
-let spell_insert_mode = 1
-let spell_auto_jump = 1
-"SpellAutoEnable
-
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
 
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
@@ -103,33 +167,82 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 
-let Tlist_Use_Right_Window = 1
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_Close_On_Select = 1
-
-noremap <leader>hex :%!xxd<CR>
-noremap <leader>nhex :%!xxd -r<CR>
+noremap <leader>hh :%!xxd<CR>
+noremap <leader>nh :%!xxd -r<CR>
 noremap Y :redo<CR>
-noremap T :TlistToggle<CR>
-" Map ctrl-movement keys to window switching
-noremap <C-k> <C-w><Up>
-noremap <C-j> <C-w><Down>
-noremap <C-l> <C-w><Right>
-noremap <C-h> <C-w><Left>
-nnoremap <Tab> <C-w>W
 
-inoremap <tab> <c-r>=InsertTabWrapper ("forward")<CR>
-inoremap <s-tab> <c-r>=InsertTabWrapper ("backward")<CR>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Moving around, tabs and buffers
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Map space to / (search) and c-space to ? (backgwards search)
+map <space> /
+map <c-space> ?
+map <silent> <leader><cr> :noh<cr>
+
+" Smart way to move btw. windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Close the current buffer
+map <leader>bd :Bclose<cr>
+
+" Close all the buffers
+map <leader>ba :1,300 bd!<cr>
+
+" Use the arrows to something usefull
+map <right> :bn<cr>
+map <left> :bp<cr>
+
+" Tab configuration
+map <leader>tn :tabnew<cr>
+map <leader>te :tabedit
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+
+" When pressing <leader>cd switch to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>
 
 
-function! InsertTabWrapper(direction)
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<tab>"
-  elseif "backward" == a:direction
-    return "\<c-p>"
-  else
-    return "\<c-n>"
-  endif
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+   let l:currentBufNum = bufnr("%")
+   let l:alternateBufNum = bufnr("#")
+
+   if buflisted(l:alternateBufNum)
+     buffer #
+   else
+     bnext
+   endif
+
+   if bufnr("%") == l:currentBufNum
+     new
+   endif
+
+   if buflisted(l:currentBufNum)
+     execute("bdelete! ".l:currentBufNum)
+   endif
 endfunction
+
+" Specify the behavior when switching between buffers 
+try
+  set switchbuf=usetab
+  set stal=2
+catch
+endtry
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Spell checking
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+map <leader>sd :set spelllang=de_de<cr>
+map <leader>se :set spelllang=en_us<cr>
+
+"Shortcuts using <leader>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>s? z=
 
