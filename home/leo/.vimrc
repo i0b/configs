@@ -175,8 +175,8 @@ noremap Y :redo<CR>
 " => Moving around, tabs and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map space to / (search) and c-space to ? (backgwards search)
-map <space> /
-map <c-space> ?
+"map <space> /
+"map <c-space> ?
 map <silent> <leader><cr> :noh<cr>
 
 " Smart way to move btw. windows
@@ -192,8 +192,8 @@ map <leader>bd :Bclose<cr>
 map <leader>ba :1,300 bd!<cr>
 
 " Use the arrows to something usefull
-map <right> :bn<cr>
-map <left> :bp<cr>
+"map <right> :bn<cr>
+"map <left> :bp<cr>
 
 " Tab configuration
 map <leader>tn :tabnew<cr>
